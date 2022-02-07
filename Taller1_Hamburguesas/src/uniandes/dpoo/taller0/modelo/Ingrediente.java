@@ -18,9 +18,7 @@ public class Ingrediente {
 	 * Costo adicional que se debe asumir por incluir el ingrediente.
 	 */
 	private int costoAdicional;
-	
-	private String albondiga;
-	
+		
 	
 	// ************************************************************************
 	// Constructores
