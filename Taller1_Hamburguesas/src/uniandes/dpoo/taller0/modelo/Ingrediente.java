@@ -19,6 +19,8 @@ public class Ingrediente {
 	 */
 	private int costoAdicional;
 	
+	private String albondiga;
+	
 	
 	// ************************************************************************
 	// Constructores
@@ -57,5 +59,7 @@ public class Ingrediente {
 	 */
 	public int getCostoAdicional() {
 		return costoAdicional;
+		
+	
 	}
 }
