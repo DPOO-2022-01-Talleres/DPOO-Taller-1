@@ -36,7 +36,7 @@ public class Evento
 
 	/**
 	 * Construye un nuevo evento, inicializando los atributos con los valores de los
-	 * parámetros y creando una lista vacía de participaciones.
+	 * parámetros.
 	 * 
 	 * @param deporte El deporte al que corresponde el evento
 	 * @param anio    El año de la competencia
