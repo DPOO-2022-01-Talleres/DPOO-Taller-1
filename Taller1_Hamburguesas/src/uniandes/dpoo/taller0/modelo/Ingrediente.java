@@ -1,7 +1,7 @@
 package uniandes.dpoo.taller0.modelo;
 
 /**
- * Esta clase encapsula la información sobre los ingredientes.
+ * Esta clase encapsula la información de los ingredientes.
  */
 public class Ingrediente {
 	
@@ -15,7 +15,7 @@ public class Ingrediente {
 	private String nombre;
 	
 	/**
-	 * Costo adicional que se debe asumir por incluir el ingrediente.
+	 * Costo adicional al que se debe incurrir por adicionar el ingrediente.
 	 */
 	private int costoAdicional;
 		
@@ -29,7 +29,7 @@ public class Ingrediente {
 	 * los parámetros.
 	 * 
 	 * @param nombre El nombre del ingrediente.
-	 * @param costoAdicional El costo adicional por incluir e ingrediente.
+	 * @param costoAdicional El costo adicional del ingrediente.
 	 */
 	public Ingrediente(String nombre, int costoAdicional) {
 		this.nombre = nombre;

@@ -7,12 +7,6 @@ import java.util.ArrayList;
  */
 public class ProductoAjustado implements Producto {
 	
-	/**
-	 * Lista de pendientes:
-	 *  > Modificar listas ingredientes agregados y eliminados.
-	 *  > Método generarTextoFatura.
-	 */
-	
 	// ************************************************************************
 	// Atributos
 	// ************************************************************************
@@ -53,7 +47,11 @@ public class ProductoAjustado implements Producto {
 	
 	@Override
 	public int getPrecio() {
-		return base.getPrecio();
+		int nuevoPrecio = base.getPrecio();
+		for (Ingrediente ingrediente:agregados) {
+			nuevoPrecio += ingrediente.getCostoAdicional();
+		}
+		return nuevoPrecio;
 	}
 
 	@Override
@@ -61,13 +59,18 @@ public class ProductoAjustado implements Producto {
 		return base.getNombre();
 	}
 	
+	
 	// ************************************************************************
 	// Otros métodos
 	// ************************************************************************
 	
 	@Override
 	public String generarTextoFactura() {
-		return null;
+		String factura = "\n" + base.getNombre() + "\t" + base.getPrecio();
+		for (Ingrediente ingrediente:agregados) {
+			factura += "\n" + ingrediente.getNombre() + "\t" + ingrediente.getCostoAdicional();
+		}
+		return factura;
 	}
 	
 }

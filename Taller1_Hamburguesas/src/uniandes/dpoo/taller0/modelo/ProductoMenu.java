@@ -25,8 +25,8 @@ public class ProductoMenu implements Producto {
 	// ************************************************************************
 	
 	/**
-	 * Construye un nuevo producto e inicializa sus atributos con la información de
-	 * los parámetros.
+	 * Construye un nuevo producto del menú e inicializa sus atributos con la 
+	 * información de los parámetros.
 	 * 
 	 * @param nombre El nombre del producto.
 	 * @param precioBase El precio base del producto.

@@ -3,15 +3,9 @@ package uniandes.dpoo.taller0.modelo;
 import java.util.ArrayList;
 
 /**
- * Esta clase encapsula la información sobre los combos.
+ * Esta clase encapsula la información de cualquier combos.
  */
 public class Combo implements Producto {
-	
-	/**
-	 * Lista de pendientes:
-	 *  > Modificar UML por adición del atributo precioTotal.
-	 *  > Método generarTextoFactura.
-	 */
 	
 	// ************************************************************************
 	// Atributos
@@ -30,7 +24,7 @@ public class Combo implements Producto {
 	/**
 	 * Lista de los productos que posee el combo.
 	 */
-	private ArrayList<Producto> itemsCombo;
+	private ArrayList<ProductoMenu> itemsCombo;
 	
 	
 	// ************************************************************************
@@ -62,7 +56,11 @@ public class Combo implements Producto {
 
 	@Override
 	public int getPrecio() {
-		return 0;
+		double precioCombo = 0.0;
+		for (ProductoMenu item:itemsCombo) {
+			precioCombo += (descuento * item.getPrecio());
+		}
+		return (int) precioCombo;
 	}
 
 	
@@ -72,8 +70,8 @@ public class Combo implements Producto {
 
 	@Override
 	public String generarTextoFactura() {
-		// TODO Auto-generated method stub
-		return null;
+		String factura = "\n" + nombreCombo + "\t" + getPrecio();
+		return factura;
 	}
 	
 	/**
@@ -82,8 +80,10 @@ public class Combo implements Producto {
 	 * @param itemCombo
 	 */
 	public void agregarItemACombo(Producto itemCombo) {
-		itemsCombo.add(itemCombo);
+		if (itemCombo instanceof ProductoMenu) {
+			ProductoMenu item = (ProductoMenu) itemCombo;
+			itemsCombo.add(item);
+		}
+		
 	}
-	
-	
 }
