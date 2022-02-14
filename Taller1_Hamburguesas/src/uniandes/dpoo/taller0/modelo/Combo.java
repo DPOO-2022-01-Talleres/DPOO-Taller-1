@@ -3,7 +3,7 @@ package uniandes.dpoo.taller0.modelo;
 import java.util.ArrayList;
 
 /**
- * Esta clase encapsula la información de cualquier combos.
+ * Esta clase encapsula la información de un combo.
  */
 public class Combo implements Producto {
 	
@@ -56,11 +56,11 @@ public class Combo implements Producto {
 
 	@Override
 	public int getPrecio() {
-		double precioCombo = 0.0;
+		double precioComboDouble = 0;
 		for (ProductoMenu item:itemsCombo) {
-			precioCombo += (item.getPrecio() - (descuento * item.getPrecio()));
+			precioComboDouble += (item.getPrecio() * (1 - descuento));
 		}
-		return (int) precioCombo;
+		return (int) Math.round(precioComboDouble);
 	}
 
 	
@@ -84,6 +84,6 @@ public class Combo implements Producto {
 			ProductoMenu item = (ProductoMenu) itemCombo;
 			itemsCombo.add(item);
 		}
-		
 	}
+	
 }

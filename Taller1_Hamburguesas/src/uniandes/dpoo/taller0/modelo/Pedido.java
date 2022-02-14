@@ -11,8 +11,8 @@ public class Pedido {
 
 	/**
 	 * Pendientes:
-	 *  > ¿numeroPedidos es static?
 	 *  > Método guardarFactura().
+	 *  > Asignar valor a idPedido.
 	 */
 	
 	// ************************************************************************
@@ -108,18 +108,16 @@ public class Pedido {
 	 * @return valorIva
 	 */
 	private int getPrecioIVAPedido() {
-		int valorIva = (int) (getPrecioNetoPedido() * 0.19);
-		return valorIva;
+		return (int) Math.round((getPrecioNetoPedido() * 0.19));
 	}
 	
 	/**
 	 * Calcula el valor total del pedido (neto + IVA).
 	 * 
-	 * @return precioTotal
+	 * @return Precio total del pedido.
 	 */
 	private int getPrecioTotalPedido() {
-		int precioTotal = (int) (getPrecioNetoPedido() + getPrecioIVAPedido());
-		return precioTotal;
+		return (getPrecioNetoPedido() + getPrecioIVAPedido());
 	}
 	
 	/**
@@ -145,7 +143,7 @@ public class Pedido {
 	 */
 	public void guardarFactura(File archivo) {
 		String factura = generarTextoFactura();
-		//TODO
+		//TODO Hacer este gran puto método.
 		numeroPedidos ++;
 	}
 

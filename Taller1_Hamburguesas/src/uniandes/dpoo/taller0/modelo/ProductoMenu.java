@@ -1,7 +1,7 @@
 package uniandes.dpoo.taller0.modelo;
 
 /**
- * Esta clase encapsula la información de un producto cualquiera del menú.
+ * Esta clase encapsula la información de un producto básico del menú.
  */
 public class ProductoMenu implements Producto {
 	

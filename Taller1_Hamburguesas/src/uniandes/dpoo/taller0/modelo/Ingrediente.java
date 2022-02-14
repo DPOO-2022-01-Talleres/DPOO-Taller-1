@@ -1,7 +1,7 @@
 package uniandes.dpoo.taller0.modelo;
 
 /**
- * Esta clase encapsula la información de los ingredientes.
+ * Esta clase encapsula la información de un ingrediente.
  */
 public class Ingrediente {
 	

@@ -12,7 +12,7 @@ public class ProductoAjustado implements Producto {
 	// ************************************************************************
 	
 	/**
-	 * El producto base que se desea modificar.
+	 * El producto base que se va a modificar.
 	 */
 	private ProductoMenu base;
 	
@@ -46,17 +46,17 @@ public class ProductoAjustado implements Producto {
 	// ************************************************************************
 	
 	@Override
+	public String getNombre() {
+		return base.getNombre();
+	}
+	
+	@Override
 	public int getPrecio() {
 		int nuevoPrecio = base.getPrecio();
 		for (Ingrediente ingrediente:agregados) {
 			nuevoPrecio += ingrediente.getCostoAdicional();
 		}
 		return nuevoPrecio;
-	}
-
-	@Override
-	public String getNombre() {
-		return base.getNombre();
 	}
 	
 	
@@ -68,9 +68,11 @@ public class ProductoAjustado implements Producto {
 	public String generarTextoFactura() {
 		String factura = "\n" + base.getNombre() + "\t" + base.getPrecio();
 		for (Ingrediente ingrediente:agregados) {
-			factura += "\n" + ingrediente.getNombre() + "\t" + ingrediente.getCostoAdicional();
+			factura += "\n+ " + ingrediente.getNombre() + "\t" + ingrediente.getCostoAdicional();
 		}
-		
+		for (Ingrediente ingrediente:eliminados) {
+			factura += "\n- " + ingrediente.getNombre() + "\t0";
+		}
 		return factura;
 	}
 	

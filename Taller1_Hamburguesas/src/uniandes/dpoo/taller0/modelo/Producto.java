@@ -30,7 +30,7 @@ public interface Producto {
 	// ************************************************************************
 
 	/**
-	 * Genera la cadena de caracteres relacionado a la factura del pedido.
+	 * Genera la cadena relacionada a la factura del pedido.
 	 * 
 	 * @return factura.
 	 */
