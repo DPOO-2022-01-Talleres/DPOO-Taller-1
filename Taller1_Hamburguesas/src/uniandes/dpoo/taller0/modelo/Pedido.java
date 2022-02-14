@@ -1,6 +1,4 @@
-package uniandes.dpoo.taller0.procesamiento;
-
-import uniandes.dpoo.taller0.modelo.Producto;
+package uniandes.dpoo.taller0.modelo;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -62,7 +60,6 @@ public class Pedido {
 		this.nombreCliente = nombreCliente;
 		this.direccionCliente = direccionCliente;
 		this.itemsPedido = new ArrayList<>();
-		idPedido = numeroPedidos + 1;
 	}
 	
 	
@@ -122,7 +119,7 @@ public class Pedido {
 	 */
 	private int getPrecioTotalPedido() {
 		int precioTotal = (int) (getPrecioNetoPedido() + getPrecioIVAPedido());
-		return precioTotal;
+		return precioTotal;. 
 	}
 	
 	/**
@@ -147,7 +144,8 @@ public class Pedido {
 	 * @param archivo
 	 */
 	public void guardarFactura(File archivo) {
-		// TODO Pendiente este método.
+		String factura = generarTextoFactura();
+		//TODO
 		numeroPedidos ++;
 	}
 

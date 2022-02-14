@@ -58,7 +58,7 @@ public class Combo implements Producto {
 	public int getPrecio() {
 		double precioCombo = 0.0;
 		for (ProductoMenu item:itemsCombo) {
-			precioCombo += (descuento * item.getPrecio());
+			precioCombo += (item.getPrecio() - (descuento * item.getPrecio()));
 		}
 		return (int) precioCombo;
 	}

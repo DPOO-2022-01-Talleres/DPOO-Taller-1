@@ -70,6 +70,7 @@ public class ProductoAjustado implements Producto {
 		for (Ingrediente ingrediente:agregados) {
 			factura += "\n" + ingrediente.getNombre() + "\t" + ingrediente.getCostoAdicional();
 		}
+		
 		return factura;
 	}
 	

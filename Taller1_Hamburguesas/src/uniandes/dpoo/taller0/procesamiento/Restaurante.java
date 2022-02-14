@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 import uniandes.dpoo.taller0.modelo.Combo;
 import uniandes.dpoo.taller0.modelo.Ingrediente;
+import uniandes.dpoo.taller0.modelo.Pedido;
 import uniandes.dpoo.taller0.modelo.ProductoMenu;
 
 /**
@@ -23,12 +24,17 @@ public class Restaurante {
 	// ************************************************************************
 	
 	/**
+	 * Archivo en donde se guardar� la informaci�n de los pedidos
+	 */
+	private File archivoPedidos;
+	
+	/**
 	 * Tabla de Hash que guarda la información de los pedidos.
 	 * Las llaves son ID de pedidos anteriormente realizados.
 	 * Los valores son objetos de tipo String que guardan la información de
 	 * las facturas de los pedidos.
 	 */
-	private HashMap<Integer, String> pedidos;
+	private HashMap<Integer, Pedido> pedidos;
 	
 	/**
 	 * Pedido que se está realizando actualmente.
@@ -100,6 +106,16 @@ public class Restaurante {
 	 */
 	public HashMap<String, Ingrediente> getIngredientes(){
 		return ingredientes;
+	}
+	
+	
+	/**
+	 * Consulta los combos
+	 * 
+	 * @return combos
+	 */
+	public HashMap<String, Combo> getCombos(){
+		return combos;
 	}
 	
 	
@@ -234,9 +250,23 @@ public class Restaurante {
 	// Métodos de los pedidos
 	// ************************************************************************
 
+	/**
+	 * Crea un nuevo pedido
+	 * 
+	 * @param nombreCliente
+	 * @param direccionCliente
+	 */
 	public void iniciarPedido (String nombreCliente, String direccionCliente) {
 		pedidoEnCurso = new Pedido(nombreCliente, direccionCliente);
 	}
 	
+	
+	/**
+	 * Cierra un pedido y guarda la factura
+	 */
+	public void cerrarYGuardarPedido () {
+		pedidoEnCurso.guardarFactura(archivoPedidos);
+		pedidoEnCurso = null;
+	}
 	
 }
