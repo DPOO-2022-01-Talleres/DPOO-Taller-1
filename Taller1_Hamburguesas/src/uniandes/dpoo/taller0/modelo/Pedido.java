@@ -119,7 +119,7 @@ public class Pedido {
 	 */
 	private int getPrecioTotalPedido() {
 		int precioTotal = (int) (getPrecioNetoPedido() + getPrecioIVAPedido());
-		return precioTotal;. 
+		return precioTotal;
 	}
 	
 	/**

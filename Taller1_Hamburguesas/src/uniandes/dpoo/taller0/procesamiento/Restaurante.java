@@ -48,19 +48,23 @@ public class Restaurante {
 	 */
 	private HashMap<String, Combo> combos;
 	
+	private ArrayList<Combo> combosArray;
+	
 	/**
 	 * Tabla de Hash que guarda la información de los productos del menú.
 	 * Las llaves son nombres de los productos.
 	 * Los valores son objetos de tipo ProductoMenu.
 	 */
-	private HashMap<String, ProductoMenu> menuBase;
+	private ArrayList<ProductoMenu> menuBase;
+	
+	private HashMap<String, ProductoMenu> menuBaseHash;
 	
 	/**
 	 * Tabla de Hash que guarda la información de los ingredientes.
 	 * Las llaves son nombres de los ingredientes.
 	 * Los valores son objetos de tipo Ingrediente.
 	 */
-	private HashMap<String, Ingrediente> ingredientes;
+	private ArrayList<Ingrediente> ingredientes;
 	
 	
 	
@@ -71,7 +75,9 @@ public class Restaurante {
 	public Restaurante() {
 		this.pedidos = new HashMap<>();
 		this.combos = new HashMap<>();
-		this.menuBase = new HashMap<>();
+		this.menuBaseHash = new HashMap<>();
+		this.menuBase = new ArrayList<>();
+		this.combosArray = new ArrayList<>();
 		this.ingredientes = new HashMap<>();
 	}
 	
@@ -95,7 +101,7 @@ public class Restaurante {
 	 * 
 	 * @return menuBase
 	 */
-	public HashMap<String, ProductoMenu> getMenuBase(){
+	public ArrayList<ProductoMenu> getMenuBase(){
 		return menuBase;
 	}
 	
@@ -104,7 +110,7 @@ public class Restaurante {
 	 * 
 	 * @return ingredientes
 	 */
-	public HashMap<String, Ingrediente> getIngredientes(){
+	public ArrayList<Ingrediente> getIngredientes(){
 		return ingredientes;
 	}
 	
@@ -118,6 +124,9 @@ public class Restaurante {
 		return combos;
 	}
 	
+	public ArrayList<Combo> getCombosArray() {
+		return combosArray;
+	}
 	
 	
 	// ************************************************************************
@@ -160,7 +169,7 @@ public class Restaurante {
 			String nombre = partes[0];
 			int costoAdicional = Integer.parseInt(partes[1]);
 			Ingrediente nuevoIngrediente = new Ingrediente(nombre, costoAdicional);
-			ingredientes.put(nombre, nuevoIngrediente);
+			ingredientes.add(nuevoIngrediente);
 			
 			// Leer la siguiente línea.
 			linea = br.readLine();
@@ -192,7 +201,8 @@ public class Restaurante {
 			String nombre = partes[0];
 			int precioBase = Integer.parseInt(partes[1]);
 			ProductoMenu nuevoProductoMenu = new ProductoMenu(nombre, precioBase);
-			menuBase.put(nombre, nuevoProductoMenu);
+			menuBase.add(nuevoProductoMenu);
+			menuBaseHash.put(nombre, nuevoProductoMenu);
 			
 			// Leer la siguiente línea.
 			linea = br.readLine();
@@ -232,10 +242,11 @@ public class Restaurante {
 			Combo nuevoCombo = new Combo(descuento, nombreCombo);
 			for (int i = 2; i < partes.length; i++ ) {
 				String nombreItem = partes[i];
-				ProductoMenu itemCombo = menuBase.get(nombreItem);
+				ProductoMenu itemCombo = menuBaseHash.get(nombreItem);
 				nuevoCombo.agregarItemACombo(itemCombo);
 			}
 			combos.put(nombreCombo, nuevoCombo);
+			combosArray.add(nuevoCombo);
 			
 			// Leer la siguiente línea.
 			linea = br.readLine();
