@@ -76,4 +76,12 @@ public class ProductoAjustado implements Producto {
 		return factura;
 	}
 	
+	public void agregarIngrediente(Ingrediente ingrediente) {
+		agregados.add(ingrediente);
+	}
+	
+	public void eliminarIngrediente(Ingrediente ingrediente) {
+		eliminados.add(ingrediente);
+	}
+	
 }

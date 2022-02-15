@@ -40,7 +40,7 @@ public class Restaurante {
 	 * Las llaves son ID de pedidos anteriormente realizados.
 	 * Los valores son objetos de tipo Pedido.
 	 */
-	private HashMap<Integer, Pedido> pedidos;
+	private static HashMap<Integer, Pedido> pedidos;
 	
 	/**
 	 * Pedido que se está realizando actualmente.
@@ -78,7 +78,6 @@ public class Restaurante {
 	
 	public Restaurante() {
 		this.combos = new HashMap<>();
-		this.pedidos = new HashMap<>();
 		this.menuBase = new HashMap<>();
 		this.ingredientes = new ArrayList<>();
 		this.menuBaseLista = new ArrayList<>();
@@ -152,7 +151,12 @@ public class Restaurante {
 	 */
 	public void cerrarYGuardarPedido () {
 		pedidoEnCurso.guardarFactura(archivoPedidos);
+		pedidos.put(pedidoEnCurso.getIdPedido(), pedidoEnCurso);
 		pedidoEnCurso = null;
+	}
+	
+	public Pedido consultarPedidoPorId (int id) {
+		return pedidos.get(id);
 	}
 	
 	
@@ -184,7 +188,8 @@ public class Restaurante {
 	private void cargarIngredientes(File archivoIngredientes) throws IOException {
 		
 		// Abrir el archivo y leer la primera línea.
-		BufferedReader br = new BufferedReader(new FileReader(archivoIngredientes));
+		String nombreArchivo = "C:\\Users\\J. Nicolás Cárdenas\\OneDrive - Universidad de los Andes\\(3) Sexto Semestre\\(4) Diseño y Programación O.O\\2- Talleres\\Taller 1 - Hamburguesas_esqueleto\\Taller1_Hamburguesas\\data\\ingredientes.txt";
+		BufferedReader br = new BufferedReader(new FileReader(nombreArchivo));
 		String linea = br.readLine();
 		
 		// Leer línea a línea hasta que se llegue a la última.
@@ -216,7 +221,8 @@ public class Restaurante {
 	private void cargarMenu(File archivoMenu) throws IOException {
 		
 		// Abrir el archivo y leer la primera línea.
-		BufferedReader br = new BufferedReader(new FileReader(archivoMenu));
+		String nombreArchivo = "C:\\Users\\J. Nicolás Cárdenas\\OneDrive - Universidad de los Andes\\(3) Sexto Semestre\\(4) Diseño y Programación O.O\\2- Talleres\\Taller 1 - Hamburguesas_esqueleto\\Taller1_Hamburguesas\\data\\menu.txt";
+		BufferedReader br = new BufferedReader(new FileReader(nombreArchivo));
 		String linea = br.readLine();
 		
 		// Leer línea a línea hasta que se llegue a la última.
@@ -249,7 +255,8 @@ public class Restaurante {
 	private void cargarCombos(File archivoCombos) throws IOException {
 		
 		// Abrir el archivo y leer la primera línea.
-		BufferedReader br = new BufferedReader(new FileReader(archivoCombos));
+		String nombreArchivo = "C:\\Users\\J. Nicolás Cárdenas\\OneDrive - Universidad de los Andes\\(3) Sexto Semestre\\(4) Diseño y Programación O.O\\2- Talleres\\Taller 1 - Hamburguesas_esqueleto\\Taller1_Hamburguesas\\data\\combos.txt";
+		BufferedReader br = new BufferedReader(new FileReader(nombreArchivo));
 		String linea = br.readLine();
 		
 		// Leer línea a línea hasta que se llegue a la última.

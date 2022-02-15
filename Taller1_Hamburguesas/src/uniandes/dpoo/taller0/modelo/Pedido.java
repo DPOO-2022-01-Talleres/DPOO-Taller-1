@@ -60,6 +60,7 @@ public class Pedido {
 		this.nombreCliente = nombreCliente;
 		this.direccionCliente = direccionCliente;
 		this.itemsPedido = new ArrayList<>();
+		this.idPedido = (numeroPedidos + 1);
 	}
 	
 	
@@ -74,6 +75,14 @@ public class Pedido {
 	 */
 	public int getIdPedido () {
 		return idPedido;
+	}
+	
+	public String getNombreCliente() {
+		return nombreCliente;
+	}
+	
+	public String getDireccionCliente() {
+		return direccionCliente;
 	}
 	
 	
@@ -126,7 +135,7 @@ public class Pedido {
 	 * @return factura
 	 */
 	private String generarTextoFactura() {
-		String factura = "";
+		String factura = "\nGracias por su pedido. La factura es la siguiente:";
 		for (Producto item:itemsPedido) {
 			factura += item.generarTextoFactura();
 		}
@@ -143,6 +152,7 @@ public class Pedido {
 	 */
 	public void guardarFactura(File archivo) {
 		String factura = generarTextoFactura();
+		System.out.println(factura);
 		//TODO Hacer este gran puto método.
 		numeroPedidos ++;
 	}

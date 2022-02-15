@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import uniandes.dpoo.taller0.modelo.Combo;
+import uniandes.dpoo.taller0.modelo.Ingrediente;
 import uniandes.dpoo.taller0.modelo.Pedido;
 import uniandes.dpoo.taller0.modelo.ProductoAjustado;
 import uniandes.dpoo.taller0.modelo.ProductoMenu;
@@ -25,15 +26,36 @@ import uniandes.dpoo.taller0.procesamiento.Restaurante;
  */
 public class Aplicacion {
 	
-	private Restaurante rest = new Restaurante();
-	private Pedido ped;
+	// ************************************************************************
+	// Atributos
+	// ************************************************************************
+	
+	private Restaurante rest;
 	private File archivoIngredientes;
 	private File archivoMenu;
 	private File archivoCombos;
 	
-	public String imprimirMenu() {
+	
+	// ************************************************************************
+	// Métodos de impresión
+	// ************************************************************************
+
+	/**
+	 * Imprime el menú del restaurante.
+	 */
+	public void mostrarMenu() {
+		System.out.println("\nOpciones de la aplicación:");
+		System.out.println(" 1. Mostrar el menú.");
+		System.out.println(" 2. Iniciar un nuevo pedido.");
+		System.out.println(" 3. Agregar un elemento a un pedido.");
+		System.out.println(" 4. Cerrar un pedido y guardar la factura.");
+		System.out.println(" 5. Consultar la información de un pedido dado su id.");
+		System.out.println(" 6. Salir de la aplicación.");
+	}
+	
+	public void imprimirProductosBasicos() {
 		String menu = "";
-		menu += "\n Productos básicos: " ;
+		menu += "\nProductos básicos: " ;
 		menu += "\n1. Corral: 14000";
 		menu += "\n2. Corral queso: 16000";
 		menu += "\n3. Corral pollo: 15000";
@@ -56,156 +78,234 @@ public class Aplicacion {
 		menu += "\n20. Agua cristal sin gas: 5000";
 		menu += "\n21. Agua cristal con gas: 5000";
 		menu += "\n22. Gaseosa: 5000";
-		
-		menu += "\nCombos: ";
-		
-		HashMap<String, Combo> combos = rest.getCombos();
-		var llaveValorCombo = combos.entrySet();
+		System.out.println(menu);
+	}
+	
+	public void imprimirIngredientes() {
+		String menuIngredientes = "";
+		menuIngredientes += "\nIngredientes";
+		menuIngredientes += "\n1. Lechuga: 1000";
+		menuIngredientes += "\n2. Tomate: 1000";
+		menuIngredientes += "\n3. Cebolla: 1000";
+		menuIngredientes += "\n4. Queso mozarella: 2500";
+		menuIngredientes += "\n5. Huevo: 2500";
+		menuIngredientes += "\n6. Queso americano: 2500";
+		menuIngredientes += "\n7. Tocineta express: 2500";
+		menuIngredientes += "\n8. Papa callejera: 2000";
+		menuIngredientes += "\n9. Pepinillos: 2500";
+		menuIngredientes += "\n10. Cebolla grille: 2500";
+		menuIngredientes += "\n11. Suero costeño: 3000";
+		menuIngredientes += "\n12. Frijol refrito: 4500";
+		menuIngredientes += "\n13. Queso fundido: 4500";
+		menuIngredientes += "\n14. Tocineta picada: 6000";
+		menuIngredientes += "\n15. Piña: 2500";
+		System.out.println(menuIngredientes);
+	}
+	
+	public void imprimirCombos() {
+		String menuCombos = "";		
+		menuCombos += "\nCombos: ";
+		ArrayList<Combo> combosLista = rest.getCombosLista();
 		int opcion = 0;
-		for (var entry : llaveValorCombo) {
+		for (Combo combo:combosLista) {
 			opcion ++;
-			menu += ("\n" + opcion +". " + entry.getKey() +  ": " + entry.getValue());
+			menuCombos += ("\n" + opcion +". " + combo.getNombre() +  ": " + combo.getPrecio());
 		}
-		
-		return menu;
+		System.out.println(menuCombos);
 	}
 	
-	private void escogerOpcionPedido(Restaurante rest) {
-		System.out.println("Que desea pedir: \n1. Producto Básico \n2. Combo");
-		int opcionPedido = Integer.parseInt(input("Ingrese el número de la opción elegida: "));
-		
-		if (opcionPedido == 1) {
-			Pedido pedido = rest.getPedidoEnCurso();
-			ArrayList<ProductoMenu> productosBase = rest.getMenuBase();
-			int productoBasicoEscogido = Integer.parseInt(input("Escoja un producto básico: "));
-			ProductoMenu productoBasicoActual = productosBase.get(productoBasicoEscogido);
-			pedido.agregarProducto(productoBasicoActual);
-			
-			boolean masIngredientes = true;
-			while (masIngredientes) {
-				System.out.println("Desea agregar más ingredientes: ");
-				System.out.println("1. Agregar ingredientes\n 2. Quitar ingredientes\n 3. Terminar pedido");
-				
-				int opcionIngredientes = Integer.parseInt(input("Ingrese el número de la opción elegida: "));
-				
-				ProductoAjustado productoActualAjustado = new ProductoAjustado(productoBasicoActual);
-				String menuIngredientes = "";
-				menuIngredientes += "\nIngredientes";
-				menuIngredientes += "\n1. Lechuga: 1000";
-				menuIngredientes += "\n2. Tomate: 1000";
-				menuIngredientes += "\n3. Cebolla: 1000";
-				menuIngredientes += "\n4. Queso mozarella: 2500";
-				menuIngredientes += "\n5. Huevo: 2500";
-				menuIngredientes += "\n6. Queso americano: 2500";
-				menuIngredientes += "\n7. Tocineta express: 2500";
-				menuIngredientes += "\n8. Papa callejera: 2000";
-				menuIngredientes += "\n9. Pepinillos: 2500";
-				menuIngredientes += "\n10. Cebolla grille: 2500";
-				menuIngredientes += "\n11. Suero costeño: 3000";
-				menuIngredientes += "\n12. Frijol refrito: 4500";
-				menuIngredientes += "\n13. Queso fundido: 4500";
-				menuIngredientes += "\n14. Tocineta picada: 6000";
-				menuIngredientes += "\n15. Piña: 2500";
-				
-				if (opcionIngredientes == 1) {
-					System.out.println(menuIngredientes);
-					int opcionAgregarIngrediente = Integer.parseInt(input("Escoja un ingrediente"));
-				}
-			}
-		}
-		
-		else if (opcionPedido == 2) {
-			Pedido pedido = rest.getPedidoEnCurso();
-			ArrayList<Combo> combos = rest.getCombosArray();
-			int productoBasicoEscogido = Integer.parseInt(input("Escoja un producto básico: "));
-			pedido.agregarProducto(combos.get(productoBasicoEscogido));
-			}
-	}
 	
-	public void mostrarMenu()
-	{
-		System.out.println("\nOpciones de la aplicación");
-		System.out.println("1. Mostrar el menú");
-		System.out.println("2. Iniciar un nuevo pedido");
-		System.out.println("3. Agregar un elemento a un pedido");
-		System.out.println("4. Cerrar un pedido y guardar la factura");
-		System.out.println("5. Consultar la información de un pedido dado su id");
-		System.out.println("6. Salir de la aplicación");
-	}
 	
-	public void ejecutarOpcion(int opcionSeleccionada)
-	{
-		System.out.println("Restaurante Hamburguesas\n");
+	// ************************************************************************
+	// Métodos main y relacionados
+	// ************************************************************************
 
+	/**
+	 * Ejecuta la aplicación.
+	 * @throws IOException 
+	 */
+	public static void main(String[] args) throws IOException {
+		Aplicacion aplicacion = new Aplicacion();
+		aplicacion.ejecutarAplicacion(aplicacion);
+	}
+	
+	public void ejecutarAplicacion(Aplicacion aplicacion) throws IOException {
+		rest = new Restaurante();
+		System.out.println("Restaurante Hamburguesas\n");
+		mostrarMenu();
+		int opcionSeleccionada = Integer.parseInt(input("\nPor favor seleccione una opción"));
+		aplicacion.ejecutarOpcion(opcionSeleccionada, aplicacion);
+	}
+	
+	/**
+	 * Ejecuta la opción seleccionada por el usuario.
+	 * 
+	 * @param opcionSeleccionada
+	 * @throws IOException 
+	 */
+	public void ejecutarOpcion(int opcionSeleccionada, Aplicacion aplicacion) throws IOException {
+		
+		rest.cargarInformacionRestaurante(archivoIngredientes, archivoMenu, archivoCombos);
+		
+		// Ciclo que permite usar la aplicación hasta que se desee salir.
 		boolean continuar = true;
-		while (continuar)
-		{
-			try
-			{
-				mostrarMenu();
-				if (opcionSeleccionada == 1)
-					System.out.println(imprimirMenu());
+		while (continuar) {
+			try	{
 				
-				else if (opcionSeleccionada == 2 && rest != null) {
-					rest.cargarInformacionRestaurante(archivoIngredientes, archivoMenu, archivoCombos);
-					String nombreCliente = input("Por favor ingrese su nombre: ");
-					String direccionCliente = input("Por favor ingrese su dirección: ");
-					rest.iniciarPedido(nombreCliente, direccionCliente);
-					
-					
-					
-				}
-				
-				else if (opcionSeleccionada == 3 && rest != null) {
-					
-					ped.agregarProducto(null);
+				if (opcionSeleccionada == 1) {
+					imprimirProductosBasicos();
+					imprimirCombos();
+					continuar = false;
 				}
 					
-				else if (opcionSeleccionada == 4 && rest != null)
-					ejecutarAtletasPorPais();
-				else if (opcionSeleccionada == 5 && rest != null)
+				else if (opcionSeleccionada == 2) {
+					ejecutarNuevoPedido();
+				}
+				
+				else if (opcionSeleccionada == 3) {
+					ejecutarAgregarElemento();
+				}
 					
-				{
+				else if (opcionSeleccionada == 4)
+					rest.cerrarYGuardarPedido();
+				
+				else if (opcionSeleccionada == 5) {
+					ejecutarConsultarInfoId();
+				}
+				
+				else if (opcionSeleccionada == 6) {
 					System.out.println("Saliendo de la aplicación ...");
 					continuar = false;
 				}
-				else if (calculadora == null)
-				{
-					System.out.println("Para poder ejecutar esta opción primero debe cargar un archivo de atletas.");
-				}
+				
 				else
-				{
 					System.out.println("Por favor seleccione una opción válida.");
-				}
+				
+				mostrarMenu();
+				int nuevaOpcionSeleccionada = Integer.parseInt(input("\nPor favor seleccione una opción"));
+				aplicacion.ejecutarOpcion(nuevaOpcionSeleccionada, aplicacion);
+	
 			}
-			catch (NumberFormatException e)
-			{
+			
+			catch (NumberFormatException e) {
 				System.out.println("Debe seleccionar uno de los números de las opciones.");
 			}
 		}
 	}
 	
-	public static String input(String mensaje)
-	{
-		try
-		{
+	
+	private void ejecutarAgregarElemento() {
+		
+		Pedido ped = rest.getPedidoEnCurso();
+		ArrayList<ProductoMenu> menuBaseLista = rest.getMenuBaseLista();
+		ArrayList<Ingrediente> ingredientes = rest.getIngredientes();
+		Ingrediente ingredienteActual;
+		ArrayList<Combo> combos = rest.getCombosLista();
+		
+		System.out.println("\n¿Qué desea pedir? \n1. Producto Básico \n2. Combo");
+		int opcionPedido = Integer.parseInt(input("\nIngrese el número de la opción elegida"));
+		
+		if (opcionPedido == 1) {
+			
+			imprimirProductosBasicos();
+			int productoBasicoEscogido = Integer.parseInt(input("\nEscoja un producto básico"));
+			ProductoMenu productoBasicoActual = menuBaseLista.get(productoBasicoEscogido - 1);
+			ProductoAjustado productoActualAjustado = new ProductoAjustado(productoBasicoActual);
+			
+			boolean seguirModificando = true;
+			while (seguirModificando) {
+				System.out.println("\nModificación producto básico ");
+				System.out.println("1. Agregar ingrediente\n2. Quitar ingredientes\n3. Terminar");
+				int opcionIngrediente = Integer.parseInt(input("\n¿Qué desea hacer?"));
+				if (opcionIngrediente == 1) {
+					imprimirIngredientes();
+					int opcionAgregarIngrediente = Integer.parseInt(input("\nEscoja un ingrediente"));
+					ingredienteActual = ingredientes.get(opcionAgregarIngrediente - 1);
+					productoActualAjustado.agregarIngrediente(ingredienteActual);
+				}
+				
+				else if (opcionIngrediente == 2) {
+					imprimirIngredientes();
+					int opcionEliminarIngrediente = Integer.parseInt(input("\nEscoja un ingrediente"));
+					ingredienteActual = ingredientes.get(opcionEliminarIngrediente - 1);
+					productoActualAjustado.eliminarIngrediente(ingredienteActual);
+				}
+				
+				else if (opcionIngrediente == 3) {
+					seguirModificando = false;
+				}
+				
+				else {
+					System.out.println("Por favor, escoja una opción adecuada.");
+				}				
+			
+				ped.agregarProducto(productoBasicoActual);
+			
+			}
+		}
+		
+		else if (opcionPedido == 2) {
+			imprimirCombos();
+			int comboEscogido = Integer.parseInt(input("\nEscoja un combo"));
+			ped.agregarProducto(combos.get(comboEscogido - 1));
+			}
+		
+		else {
+			System.out.println("Por favor, escoja una opción adecuada.");
+		}
+	}
+
+	
+	
+	// ************************************************************************
+	// Otros métodos
+	// ************************************************************************
+	
+	/**
+	 * 
+	 */
+	private void ejecutarNuevoPedido() {
+		String nombreCliente = input("\nPor favor ingrese su nombre");
+		String direccionCliente = input("Por favor ingrese su dirección");
+		rest.iniciarPedido(nombreCliente, direccionCliente);
+		System.out.println("El pedido ha sido inicializado.");
+	}
+	
+	private void ejecutarConsultarInfoId() {
+		int idPedidoAConsultar = Integer.parseInt(input("\nPor favor ingrese el ID del pedido"));
+		Pedido pedidoID = rest.consultarPedidoPorId(idPedidoAConsultar);		
+		String mensajeSalida = "\nInformación del pedido:";
+		mensajeSalida += "\n> ID: " + idPedidoAConsultar;
+		mensajeSalida += "\n> Nombre cliente: " + pedidoID.getNombreCliente();
+		mensajeSalida += "\n> Dirección del cliente: " + pedidoID.getDireccionCliente();
+		mensajeSalida += "\n> Factura del pedido:\n";
+		System.out.println(mensajeSalida);
+	}
+	
+	
+	// ************************************************************************
+	// Otros métodos
+	// ************************************************************************
+	
+	/**
+	 * Este método sirve para imprimir un mensaje en la consola pidiéndole
+	 * información al usuario y luego leer lo que escriba el usuario.
+	 * 
+	 * @param mensaje El mensaje que se le mostrará al usuario
+	 * @return La cadena de caracteres que el usuario escriba como respuesta.
+	 */
+	public static String input(String mensaje) {
+		try	{
 			System.out.print(mensaje + ": ");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			return reader.readLine();
 		}
-		catch (IOException e)
-		{
+		catch (IOException e) {
 			System.out.println("Error leyendo de la consola");
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
-	public static void main(String[] args) {
-		
-		Aplicacion consola = new Aplicacion();
-		int opcionSeleccionada = Integer.parseInt(input("Por favor seleccione una opción"));
-		consola.ejecutarOpcion(opcionSeleccionada);
-	}
+
 
 }
