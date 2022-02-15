@@ -19,20 +19,26 @@ import uniandes.dpoo.taller0.modelo.ProductoMenu;
  */
 public class Restaurante {
 
+	/**
+	 * Pendientes:
+	 *  > Documentar listas menuBaseArray y combosArray.
+	 */
+		
 	// ************************************************************************
 	// Atributos
 	// ************************************************************************
 	
 	/**
-	 * Archivo en donde se guardar� la informaci�n de los pedidos
+	 * Tabla de Hash que guarda la información de los combos.
+	 * Las llaves son los nombres de los combos.
+	 * Los valores son objetos de tipo Combo.
 	 */
-	private File archivoPedidos;
+	private HashMap<String, Combo> combos;
 	
 	/**
 	 * Tabla de Hash que guarda la información de los pedidos.
 	 * Las llaves son ID de pedidos anteriormente realizados.
-	 * Los valores son objetos de tipo String que guardan la información de
-	 * las facturas de los pedidos.
+	 * Los valores son objetos de tipo Pedido.
 	 */
 	private HashMap<Integer, Pedido> pedidos;
 	
@@ -42,29 +48,27 @@ public class Restaurante {
 	private Pedido pedidoEnCurso;
 	
 	/**
-	 * Tabla de Hash que guarda la información de los combos.
-	 * Las llaves son nombres de los combos.
-	 * Los valores son objetos de tipo Combo.
-	 */
-	private HashMap<String, Combo> combos;
-	
-	private ArrayList<Combo> combosArray;
-	
-	/**
 	 * Tabla de Hash que guarda la información de los productos del menú.
-	 * Las llaves son nombres de los productos.
+	 * Las llaves son los nombres de los productos básicos.
 	 * Los valores son objetos de tipo ProductoMenu.
 	 */
-	private ArrayList<ProductoMenu> menuBase;
-	
-	private HashMap<String, ProductoMenu> menuBaseHash;
+	private HashMap<String, ProductoMenu> menuBase;
 	
 	/**
-	 * Tabla de Hash que guarda la información de los ingredientes.
-	 * Las llaves son nombres de los ingredientes.
-	 * Los valores son objetos de tipo Ingrediente.
+	 * Lista que guarda objetos de tipo Ingrediente.
 	 */
 	private ArrayList<Ingrediente> ingredientes;
+	
+	
+	private ArrayList<ProductoMenu> menuBaseLista;
+	
+	
+	private ArrayList<Combo> combosLista;		
+	
+	/**
+	 * Archivo en donde se guardará la información de los pedidos.
+	 */
+	private File archivoPedidos;
 	
 	
 	
@@ -73,12 +77,12 @@ public class Restaurante {
 	// ************************************************************************
 	
 	public Restaurante() {
-		this.pedidos = new HashMap<>();
 		this.combos = new HashMap<>();
-		this.menuBaseHash = new HashMap<>();
-		this.menuBase = new ArrayList<>();
-		this.combosArray = new ArrayList<>();
-		this.ingredientes = new HashMap<>();
+		this.pedidos = new HashMap<>();
+		this.menuBase = new HashMap<>();
+		this.ingredientes = new ArrayList<>();
+		this.menuBaseLista = new ArrayList<>();
+		this.combosLista = new ArrayList<>();
 	}
 	
 	
@@ -101,7 +105,7 @@ public class Restaurante {
 	 * 
 	 * @return menuBase
 	 */
-	public ArrayList<ProductoMenu> getMenuBase(){
+	public HashMap<String, ProductoMenu> getMenuBase(){
 		return menuBase;
 	}
 	
@@ -114,19 +118,43 @@ public class Restaurante {
 		return ingredientes;
 	}
 	
-	
-	/**
-	 * Consulta los combos
-	 * 
-	 * @return combos
-	 */
 	public HashMap<String, Combo> getCombos(){
 		return combos;
 	}
 	
-	public ArrayList<Combo> getCombosArray() {
-		return combosArray;
+	public ArrayList<ProductoMenu> getMenuBaseLista() {
+		return menuBaseLista;
 	}
+	
+	public ArrayList<Combo> getCombosLista() {
+		return combosLista;
+	}
+	
+	
+
+	// ************************************************************************
+	// Métodos de los pedidos
+	// ************************************************************************
+
+	/**
+	 * Crea un nuevo pedido
+	 * 
+	 * @param nombreCliente
+	 * @param direccionCliente
+	 */
+	public void iniciarPedido (String nombreCliente, String direccionCliente) {
+		pedidoEnCurso = new Pedido(nombreCliente, direccionCliente);
+	}
+
+
+	/**
+	 * Guarda la factura del pedido y lo cierra.
+	 */
+	public void cerrarYGuardarPedido () {
+		pedidoEnCurso.guardarFactura(archivoPedidos);
+		pedidoEnCurso = null;
+	}
+	
 	
 	
 	// ************************************************************************
@@ -197,12 +225,12 @@ public class Restaurante {
 			// Separar las partes de la línea y guardarlas en un arreglo.
 			String[] partes = linea.split(";");
 			
-			// Crear el producto y su información y guardarlo en menuBase.
+			// Crear el producto y su información y guardarlo en menuBase y menuBaseLista.
 			String nombre = partes[0];
 			int precioBase = Integer.parseInt(partes[1]);
 			ProductoMenu nuevoProductoMenu = new ProductoMenu(nombre, precioBase);
-			menuBase.add(nuevoProductoMenu);
-			menuBaseHash.put(nombre, nuevoProductoMenu);
+			menuBase.put(nombre, nuevoProductoMenu);
+			menuBaseLista.add(nuevoProductoMenu);
 			
 			// Leer la siguiente línea.
 			linea = br.readLine();
@@ -231,7 +259,7 @@ public class Restaurante {
 			String[] partes = linea.split(";");
 			
 			/**
-			 *  Crear el combo y su información y guardarlo en combos.
+			 *  Crear el combo y su información y guardarlo en combos y combosLista.
 			 */
 			String nombreCombo = partes[0];
 			
@@ -242,42 +270,17 @@ public class Restaurante {
 			Combo nuevoCombo = new Combo(descuento, nombreCombo);
 			for (int i = 2; i < partes.length; i++ ) {
 				String nombreItem = partes[i];
-				ProductoMenu itemCombo = menuBaseHash.get(nombreItem);
+				ProductoMenu itemCombo = menuBase.get(nombreItem);
 				nuevoCombo.agregarItemACombo(itemCombo);
 			}
 			combos.put(nombreCombo, nuevoCombo);
-			combosArray.add(nuevoCombo);
+			combosLista.add(nuevoCombo);
 			
 			// Leer la siguiente línea.
 			linea = br.readLine();
 			
 		}
 		br.close();
-	}
-	
-	
-	
-	// ************************************************************************
-	// Métodos de los pedidos
-	// ************************************************************************
-
-	/**
-	 * Crea un nuevo pedido
-	 * 
-	 * @param nombreCliente
-	 * @param direccionCliente
-	 */
-	public void iniciarPedido (String nombreCliente, String direccionCliente) {
-		pedidoEnCurso = new Pedido(nombreCliente, direccionCliente);
-	}
-	
-	
-	/**
-	 * Cierra un pedido y guarda la factura
-	 */
-	public void cerrarYGuardarPedido () {
-		pedidoEnCurso.guardarFactura(archivoPedidos);
-		pedidoEnCurso = null;
 	}
 	
 }

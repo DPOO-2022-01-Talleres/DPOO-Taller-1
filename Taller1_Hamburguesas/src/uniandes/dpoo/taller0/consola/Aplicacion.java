@@ -14,6 +14,15 @@ import uniandes.dpoo.taller0.modelo.ProductoAjustado;
 import uniandes.dpoo.taller0.modelo.ProductoMenu;
 import uniandes.dpoo.taller0.procesamiento.Restaurante;
 
+/**
+ * Esta clase permite ejecturar la aplicación y llevar a cabo todas las
+ * acciones requeridas. Entre ellas:
+ *  1. Mostrar el menú.
+ *  2. Iniciar un nuevo pedido.
+ *  3. Agregar un elemento a un pedido.
+ *  4. Cerrar un pedido y guardar factura.
+ *  5. Consultar la información de un pedido dado su id.
+ */
 public class Aplicacion {
 	
 	private Restaurante rest = new Restaurante();
