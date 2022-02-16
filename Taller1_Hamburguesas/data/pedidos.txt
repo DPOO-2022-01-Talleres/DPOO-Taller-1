@@ -1,3 +1,2 @@
 1;combo corral	22050Valor neto	22050IVA		4190Valor total	26240;a;d
 2;combo corral	22050Valor neto	22050IVA		4190Valor total	26240;r;f
-1;agua cristal sin gas	5000combo corral	22050Valor neto	27050IVA		5140Valor total	32190;Laura;Calle 4
