@@ -1,6 +1,9 @@
 package uniandes.dpoo.taller0.modelo;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -135,7 +138,8 @@ public class Pedido {
 	 * @return factura
 	 */
 	public String generarTextoFactura() {
-		String factura = "\nGracias por su pedido. La factura es la siguiente:\n";
+		System.out.println("\nGracias por su pedido. La factura es la siguiente:\\n");
+		String factura = "";
 		factura += "ID:\t" + getIdPedido();
 		factura += "\nProducto\tValor";
 		for (Producto item:itemsPedido) {
@@ -151,11 +155,14 @@ public class Pedido {
 	 * Añade una factura al texto respectivo.
 	 * 
 	 * @param archivo
+	 * @throws IOException 
 	 */
-	public void guardarFactura(File archivo) {
+	public void guardarFactura(File archivo) throws IOException {
 		String factura = generarTextoFactura();
 		System.out.println(factura);
-		//TODO Hacer este gran puto método.
+		FileWriter writer = new FileWriter("C:\\Users\\jncar\\OneDrive - Universidad de los Andes\\(3) Sexto Semestre\\(4) Diseño y Programación O.O\\2- Talleres\\Taller 1 - Hamburguesas_esqueleto\\Taller1_Hamburguesas\\data\\pedidos.txt");
+		writer.write(factura);
+		writer.close();
 		numeroPedidos ++;
 	}
 

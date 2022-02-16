@@ -148,8 +148,9 @@ public class Restaurante {
 
 	/**
 	 * Guarda la factura del pedido y lo cierra.
+	 * @throws IOException 
 	 */
-	public void cerrarYGuardarPedido () {
+	public void cerrarYGuardarPedido () throws IOException {
 		pedidoEnCurso.guardarFactura(archivoPedidos);
 		pedidos.put(pedidoEnCurso.getIdPedido(), pedidoEnCurso);
 	}
@@ -172,10 +173,10 @@ public class Restaurante {
 	 * @param archivoCombos
 	 * @throws IOException
 	 */
-	public void cargarInformacionRestaurante(File archivoIngredientes, File archivoMenu, File archivoCombos) throws IOException {
-		cargarIngredientes(archivoIngredientes);
-		cargarMenu(archivoMenu);
-		cargarCombos(archivoCombos);
+	public void cargarInformacionRestaurante() throws IOException {
+		cargarIngredientes();
+		cargarMenu();
+		cargarCombos();
 	}
 	
 	/**
@@ -184,10 +185,10 @@ public class Restaurante {
 	 * @param archivoIngredientes El archivo ingredientes.txt.
 	 * @throws IOException
 	 */
-	private void cargarIngredientes(File archivoIngredientes) throws IOException {
+	private void cargarIngredientes() throws IOException {
 		
 		// Abrir el archivo y leer la primera línea.
-		String nombreArchivo = "C:\\Users\\jncar\\OneDrive - Universidad de los Andes\\(3) Sexto Semestre\\(4) Diseño y Programación O.O\\2- Talleres\\Taller 1 - Hamburguesas_esqueleto\\Taller1_Hamburguesas\\data\\ingredientes.txt";
+		String nombreArchivo = System.getProperty("user.dir") + "/data/ingredientes.txt";
 		BufferedReader br = new BufferedReader(new FileReader(nombreArchivo));
 		String linea = br.readLine();
 		
@@ -217,10 +218,10 @@ public class Restaurante {
 	 * @param archivoMenu El archivo menu.txt.
 	 * @throws IOException
 	 */
-	private void cargarMenu(File archivoMenu) throws IOException {
+	private void cargarMenu() throws IOException {
 		
 		// Abrir el archivo y leer la primera línea.
-		String nombreArchivo = "C:\\Users\\jncar\\OneDrive - Universidad de los Andes\\(3) Sexto Semestre\\(4) Diseño y Programación O.O\\2- Talleres\\Taller 1 - Hamburguesas_esqueleto\\Taller1_Hamburguesas\\data\\menu.txt";
+		String nombreArchivo = System.getProperty("user.dir") + "/data/menu.txt";
 		BufferedReader br = new BufferedReader(new FileReader(nombreArchivo));
 		String linea = br.readLine();
 		
@@ -251,10 +252,10 @@ public class Restaurante {
 	 * @param archivoCombos El archivo combos.txt.
 	 * @throws IOException
 	 */
-	private void cargarCombos(File archivoCombos) throws IOException {
+	private void cargarCombos() throws IOException {
 		
 		// Abrir el archivo y leer la primera línea.
-		String nombreArchivo = "/Taller1_Hamburguesas/data/combos.txt";
+		String nombreArchivo = System.getProperty("user.dir") + "/data/combos.txt";
 		BufferedReader br = new BufferedReader(new FileReader(nombreArchivo));
 		String linea = br.readLine();
 		

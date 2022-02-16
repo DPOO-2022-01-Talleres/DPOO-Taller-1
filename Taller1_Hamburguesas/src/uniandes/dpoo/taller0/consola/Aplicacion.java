@@ -31,9 +31,6 @@ public class Aplicacion {
 	// ************************************************************************
 	
 	private Restaurante rest;
-	private File archivoIngredientes;
-	private File archivoMenu;
-	private File archivoCombos;
 	
 	
 	// ************************************************************************
@@ -140,7 +137,7 @@ public class Aplicacion {
 	 */
 	public void ejecutarOpcion(Aplicacion aplicacion) throws IOException {
 		
-		rest.cargarInformacionRestaurante(archivoIngredientes, archivoMenu, archivoCombos);
+		rest.cargarInformacionRestaurante();
 		
 		// Ciclo que permite usar la aplicación hasta que se desee salir.
 		boolean continuar = true;
