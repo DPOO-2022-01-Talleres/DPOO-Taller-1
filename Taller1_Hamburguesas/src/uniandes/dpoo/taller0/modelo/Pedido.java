@@ -139,7 +139,7 @@ public class Pedido {
 	 * @return factura
 	 */
 	public String generarTextoFactura() {
-		System.out.println("\nGracias por su pedido. La factura es la siguiente:\\n");
+		System.out.println("\nGracias por su pedido. La factura es la siguiente:\n");
 		String factura = "";
 		factura += "ID:\t" + getIdPedido();
 		factura += "\nProducto\tValor";
@@ -173,6 +173,7 @@ public class Pedido {
 		String factura = generarTextoFactura();
 		System.out.println(factura);
 		factura = getIdPedido() + ";" + generarTextoFacturaTxt();
+		factura += ";" + getNombreCliente() + ";" + getDireccionCliente() + "\n";
 		FileWriter writer = new FileWriter(System.getProperty("user.dir") + "/data/pedidos.txt", true);
 		writer.write(factura);
 		writer.close();

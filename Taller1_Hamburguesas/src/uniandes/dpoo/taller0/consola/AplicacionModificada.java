@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.BufferedReader;
 
+import uniandes.dpoo.taller0.modelo.Bebida;
 import uniandes.dpoo.taller0.modelo.Combo;
 import uniandes.dpoo.taller0.modelo.Ingrediente;
 import uniandes.dpoo.taller0.modelo.Pedido;
 import uniandes.dpoo.taller0.modelo.ProductoAjustado;
 import uniandes.dpoo.taller0.modelo.ProductoMenu;
-import uniandes.dpoo.taller0.procesamiento.Restaurante;
+import uniandes.dpoo.taller0.procesamiento.RestauranteModificado;
 
 /**
  * Esta clase permite ejecturar la aplicación y llevar a cabo todas las
@@ -25,7 +26,7 @@ import uniandes.dpoo.taller0.procesamiento.Restaurante;
  *  4. Cerrar un pedido y guardar factura.
  *  5. Consultar la información de un pedido dado su id.
  */
-public class Aplicacion {
+public class AplicacionModificada {
 	
 	// ************************************************************************
 	// Atributos
@@ -34,7 +35,7 @@ public class Aplicacion {
 	/*
 	 * Objeto que guarda el restaurante.
 	 */
-	private Restaurante rest;
+	private RestauranteModificado rest;
 		
 	
 	
@@ -110,6 +111,14 @@ public class Aplicacion {
 		System.out.println(menuIngredientes);
 	}
 	
+	private void imprimirBebidas() {
+		String menuBebidas = "\nBebidas:";
+		menuBebidas += "\n1. Agua cristal sin gas: 5000";
+		menuBebidas += "\n2. Agua cristal con gas: 5000";
+		menuBebidas += "\n3. Gaseosa: 5000";
+		System.out.println(menuBebidas);
+	}
+	
 	/**
 	 * Imprime el menú de combos.
 	 */
@@ -133,7 +142,7 @@ public class Aplicacion {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-		Aplicacion aplicacion = new Aplicacion();
+		AplicacionModificada aplicacion = new AplicacionModificada();
 		aplicacion.ejecutarAplicacion(aplicacion);
 	}
 	
@@ -143,8 +152,8 @@ public class Aplicacion {
 	 * @param aplicacion
 	 * @throws IOException
 	 */
-	public void ejecutarAplicacion(Aplicacion aplicacion) throws IOException {
-		rest = new Restaurante();
+	public void ejecutarAplicacion(AplicacionModificada aplicacion) throws IOException {
+		rest = new RestauranteModificado();
 		System.out.println("RESTAURANTE HAMBURGUESAS");
 		aplicacion.ejecutarOpcion(aplicacion);
 	}
@@ -155,7 +164,7 @@ public class Aplicacion {
 	 * @param opcionSeleccionada
 	 * @throws IOException 
 	 */
-	public void ejecutarOpcion(Aplicacion aplicacion) throws IOException {
+	public void ejecutarOpcion(AplicacionModificada aplicacion) throws IOException {
 		
 		rest.cargarInformacionRestaurante();
 		
@@ -170,6 +179,7 @@ public class Aplicacion {
 				if (opcionSeleccionada == 1) {
 					imprimirProductosBasicos();
 					imprimirCombos();
+					imprimirBebidas();
 				}
 					
 				else if (opcionSeleccionada == 2) {
@@ -212,8 +222,9 @@ public class Aplicacion {
 		ArrayList<Ingrediente> ingredientes = rest.getIngredientes();
 		Ingrediente ingredienteActual;
 		ArrayList<Combo> combos = rest.getCombosLista();
+		ArrayList<Bebida> bebidasLista = rest.getBebidas();
 		
-		System.out.println("\n¿Qué desea pedir? \n1. Producto Básico \n2. Combo");
+		System.out.println("\n¿Qué desea pedir? \n1. Producto Básico \n2. Combo \n3. Bebida");
 		int opcionPedido = Integer.parseInt(input("\nIngrese el número de la opción elegida"));
 		
 		if (opcionPedido == 1) {
@@ -259,6 +270,12 @@ public class Aplicacion {
 			imprimirCombos();
 			int comboEscogido = Integer.parseInt(input("\nEscoja un combo"));
 			ped.agregarProducto(combos.get(comboEscogido - 1));
+			}
+		
+		else if (opcionPedido == 3) {
+			imprimirBebidas();
+			int bebidaEscogida = Integer.parseInt(input("\nEscoja una bebida"));
+			ped.agregarProducto(bebidasLista.get(bebidaEscogida - 1));
 			}
 		
 		else {

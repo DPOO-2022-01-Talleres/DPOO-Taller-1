@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import uniandes.dpoo.taller0.modelo.Bebida;
 import uniandes.dpoo.taller0.modelo.Combo;
 import uniandes.dpoo.taller0.modelo.Ingrediente;
 import uniandes.dpoo.taller0.modelo.Pedido;
@@ -17,7 +18,7 @@ import uniandes.dpoo.taller0.modelo.ProductoMenu;
  * Esta clase permite ejecutar todos los procedimientos necesarios para
  * el correcto funcionamiento del restaurante.
  */
-public class Restaurante {
+public class RestauranteModificado {
 
 	/**
 	 * Pendientes:
@@ -60,6 +61,10 @@ public class Restaurante {
 	private ArrayList<Ingrediente> ingredientes;
 	
 	
+	
+	private ArrayList<Bebida> bebidasLista;
+	
+	
 	private ArrayList<ProductoMenu> menuBaseLista;
 	
 	
@@ -71,13 +76,14 @@ public class Restaurante {
 	// Constructores
 	// ************************************************************************
 	
-	public Restaurante() {
+	public RestauranteModificado() {
 		this.combos = new HashMap<>();
 		this.menuBase = new HashMap<>();
 		this.ingredientes = new ArrayList<>();
 		this.menuBaseLista = new ArrayList<>();
 		this.combosLista = new ArrayList<>();
 		this.pedidos =  new HashMap<Integer, ArrayList<String>>();
+		this.bebidasLista = new ArrayList<Bebida>();
 	}
 	
 	
@@ -129,6 +135,10 @@ public class Restaurante {
 		return pedidos;
 	}
 	
+	public ArrayList<Bebida> getBebidas(){
+		return bebidasLista;
+	}
+	
 	
 
 	// ************************************************************************
@@ -175,6 +185,7 @@ public class Restaurante {
 		cargarMenu();
 		cargarCombos();
 		cargarPedidos();
+		cargarBebidas();
 	}
 	
 	/**
@@ -309,6 +320,32 @@ public class Restaurante {
 			listaCliente.add(direccionCliente);
 			pedidos.put(idCombo, listaCliente);
 			linea = br.readLine();
+		}
+		br.close();
+	}
+	
+	private void cargarBebidas() throws IOException {
+		
+		// Abrir el archivo y leer la primera línea.
+		String nombreArchivo = System.getProperty("user.dir") + "/data/bebidas.txt";
+		BufferedReader br = new BufferedReader(new FileReader(nombreArchivo));
+		String linea = br.readLine();
+		
+		// Leer línea a línea hasta que se llegue a la última.
+		while (linea != null) {
+			
+			// Separar las partes de la línea y guardarlas en un arreglo.
+			String[] partes = linea.split(";");
+			
+			// Crear el producto y su información y guardarlo en menuBase y menuBaseLista.
+			String nombre = partes[0];
+			int precio = Integer.parseInt(partes[1]);
+			Bebida nuevaBebida = new Bebida(nombre, precio);
+			bebidasLista.add(nuevaBebida);
+			
+			// Leer la siguiente línea.
+			linea = br.readLine();
+			
 		}
 		br.close();
 	}
