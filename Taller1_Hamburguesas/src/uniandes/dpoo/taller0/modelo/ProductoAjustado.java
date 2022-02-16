@@ -76,6 +76,18 @@ public class ProductoAjustado implements Producto {
 		return factura;
 	}
 	
+	@Override
+	public String generarTextoFacturaTxt() {
+		String factura = base.getNombre() + "\t" + base.getPrecio();
+		for (Ingrediente ingrediente:agregados) {
+			factura += ingrediente.getNombre() + "\t" + ingrediente.getCostoAdicional();
+		}
+		for (Ingrediente ingrediente:eliminados) {
+			factura += ingrediente.getNombre() + "\t0";
+		}
+		return factura;
+	}
+	
 	public void agregarIngrediente(Ingrediente ingrediente) {
 		agregados.add(ingrediente);
 	}

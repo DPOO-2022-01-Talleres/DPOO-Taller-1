@@ -36,4 +36,6 @@ public interface Producto {
 	 */
 	public String generarTextoFactura();
 	
+	public String generarTextoFacturaTxt();
+	
 }

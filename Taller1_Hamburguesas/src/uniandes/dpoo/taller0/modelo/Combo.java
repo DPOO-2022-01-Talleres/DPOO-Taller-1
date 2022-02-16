@@ -74,6 +74,12 @@ public class Combo implements Producto {
 		return factura;
 	}
 	
+	@Override
+	public String generarTextoFacturaTxt() {
+		String factura = nombreCombo + "\t" + getPrecio();
+		return factura;
+	}
+	
 	/**
 	 * Añade un ítem a la lista itemsCombo.
 	 * 	

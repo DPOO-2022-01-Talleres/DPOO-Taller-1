@@ -62,4 +62,10 @@ public class ProductoMenu implements Producto {
 		return factura;
 	}
 	
+	@Override
+	public String generarTextoFacturaTxt() {
+		String factura = nombre + "\t" + precioBase;
+		return factura;
+	}
+	
 }

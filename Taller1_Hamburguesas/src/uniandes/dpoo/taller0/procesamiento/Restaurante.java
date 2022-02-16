@@ -40,7 +40,7 @@ public class Restaurante {
 	 * Las llaves son ID de pedidos anteriormente realizados.
 	 * Los valores son objetos de tipo Pedido.
 	 */
-	public static HashMap<Integer, Pedido> pedidos = new HashMap<Integer, Pedido>();
+	public HashMap<Integer, Pedido> pedidos = new HashMap<Integer, Pedido>();
 		
 	/**
 	 * Pedido que se está realizando actualmente.
@@ -64,11 +64,6 @@ public class Restaurante {
 	
 	
 	private ArrayList<Combo> combosLista;		
-	
-	/**
-	 * Archivo en donde se guardará la información de los pedidos.
-	 */
-	private File archivoPedidos;
 	
 	
 	
@@ -151,8 +146,7 @@ public class Restaurante {
 	 * @throws IOException 
 	 */
 	public void cerrarYGuardarPedido () throws IOException {
-		pedidoEnCurso.guardarFactura(archivoPedidos);
-		pedidos.put(pedidoEnCurso.getIdPedido(), pedidoEnCurso);
+		pedidoEnCurso.guardarFactura();
 	}
 	
 	public Pedido consultarPedidoPorId (int id) {
@@ -245,6 +239,8 @@ public class Restaurante {
 		br.close();
 	}
 	
+	
+	private 
 	
 	/**
 	 * Permite cargar la información del archivo combos.txt.

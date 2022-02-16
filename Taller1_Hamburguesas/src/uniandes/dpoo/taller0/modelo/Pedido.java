@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -151,16 +152,28 @@ public class Pedido {
 		return factura;
 	}
 	
+	public String generarTextoFacturaTxt() {
+		String factura = "";
+		for (Producto item:itemsPedido) {
+			factura += item.generarTextoFacturaTxt();
+		}
+		factura += "Valor neto" + "\t" + getPrecioNetoPedido();
+		factura += "IVA" + "\t\t" + getPrecioIVAPedido();
+		factura += "Valor total" + "\t" + getPrecioTotalPedido();		
+		return factura;
+	}
+	
 	/**
 	 * Añade una factura al texto respectivo.
 	 * 
 	 * @param archivo
 	 * @throws IOException 
 	 */
-	public void guardarFactura(File archivo) throws IOException {
+	public void guardarFactura() throws IOException {
 		String factura = generarTextoFactura();
 		System.out.println(factura);
-		FileWriter writer = new FileWriter("C:\\Users\\jncar\\OneDrive - Universidad de los Andes\\(3) Sexto Semestre\\(4) Diseño y Programación O.O\\2- Talleres\\Taller 1 - Hamburguesas_esqueleto\\Taller1_Hamburguesas\\data\\pedidos.txt");
+		factura = getIdPedido() + ";" + generarTextoFacturaTxt();
+		FileWriter writer = new FileWriter(System.getProperty("user.dir") + "/data/pedidos.txt", true);
 		writer.write(factura);
 		writer.close();
 		numeroPedidos ++;
