@@ -134,14 +134,16 @@ public class Pedido {
 	 * 
 	 * @return factura
 	 */
-	private String generarTextoFactura() {
-		String factura = "\nGracias por su pedido. La factura es la siguiente:";
+	public String generarTextoFactura() {
+		String factura = "\nGracias por su pedido. La factura es la siguiente:\n";
+		factura += "ID:\t" + getIdPedido();
+		factura += "\nProducto\tValor";
 		for (Producto item:itemsPedido) {
 			factura += item.generarTextoFactura();
 		}
-		factura += "\n\n" + "Valor neto" + "\t" + getPrecioNetoPedido();
-		factura += "\n" + "IVA" + "\t" + getPrecioIVAPedido();
-		factura += "\n\n" + "Valor total" + "\t" + getPrecioTotalPedido();		
+		factura += "\n" + "Valor neto" + "\t" + getPrecioNetoPedido();
+		factura += "\n" + "IVA" + "\t\t" + getPrecioIVAPedido();
+		factura += "\n" + "Valor total" + "\t" + getPrecioTotalPedido();		
 		return factura;
 	}
 	

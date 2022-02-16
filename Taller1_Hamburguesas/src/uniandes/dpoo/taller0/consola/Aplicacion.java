@@ -103,15 +103,12 @@ public class Aplicacion {
 	}
 	
 	public void imprimirCombos() {
-		String menuCombos = "";		
-		menuCombos += "\nCombos: ";
-		ArrayList<Combo> combosLista = rest.getCombosLista();
 		int opcion = 0;
-		for (Combo combo:combosLista) {
-			opcion ++;
-			menuCombos += ("\n" + opcion +". " + combo.getNombre() +  ": " + combo.getPrecio());
+		System.out.println("\nCombos: ");
+		for (Combo combo:rest.getCombosLista()) {
+			opcion = opcion + 1;
+			System.out.println(opcion + ". " + combo.getNombre() + "\t" + combo.getPrecio());
 		}
-		System.out.println(menuCombos);
 	}
 	
 	
@@ -132,9 +129,7 @@ public class Aplicacion {
 	public void ejecutarAplicacion(Aplicacion aplicacion) throws IOException {
 		rest = new Restaurante();
 		System.out.println("Restaurante Hamburguesas\n");
-		mostrarMenu();
-		int opcionSeleccionada = Integer.parseInt(input("\nPor favor seleccione una opción"));
-		aplicacion.ejecutarOpcion(opcionSeleccionada, aplicacion);
+		aplicacion.ejecutarOpcion(aplicacion);
 	}
 	
 	/**
@@ -143,7 +138,7 @@ public class Aplicacion {
 	 * @param opcionSeleccionada
 	 * @throws IOException 
 	 */
-	public void ejecutarOpcion(int opcionSeleccionada, Aplicacion aplicacion) throws IOException {
+	public void ejecutarOpcion(Aplicacion aplicacion) throws IOException {
 		
 		rest.cargarInformacionRestaurante(archivoIngredientes, archivoMenu, archivoCombos);
 		
@@ -152,10 +147,12 @@ public class Aplicacion {
 		while (continuar) {
 			try	{
 				
+				mostrarMenu();
+				int opcionSeleccionada = Integer.parseInt(input("\nPor favor seleccione una opción"));
+				
 				if (opcionSeleccionada == 1) {
 					imprimirProductosBasicos();
 					imprimirCombos();
-					continuar = false;
 				}
 					
 				else if (opcionSeleccionada == 2) {
@@ -176,14 +173,11 @@ public class Aplicacion {
 				else if (opcionSeleccionada == 6) {
 					System.out.println("Saliendo de la aplicación ...");
 					continuar = false;
-				}
+				}					
 				
 				else
-					System.out.println("Por favor seleccione una opción válida.");
+					System.out.println("Por favor seleccione una opción válida.");	
 				
-				mostrarMenu();
-				int nuevaOpcionSeleccionada = Integer.parseInt(input("\nPor favor seleccione una opción"));
-				aplicacion.ejecutarOpcion(nuevaOpcionSeleccionada, aplicacion);
 	
 			}
 			
@@ -239,9 +233,9 @@ public class Aplicacion {
 					System.out.println("Por favor, escoja una opción adecuada.");
 				}				
 			
-				ped.agregarProducto(productoBasicoActual);
-			
 			}
+			
+			ped.agregarProducto(productoActualAjustado);
 		}
 		
 		else if (opcionPedido == 2) {
@@ -279,6 +273,7 @@ public class Aplicacion {
 		mensajeSalida += "\n> Nombre cliente: " + pedidoID.getNombreCliente();
 		mensajeSalida += "\n> Dirección del cliente: " + pedidoID.getDireccionCliente();
 		mensajeSalida += "\n> Factura del pedido:\n";
+		mensajeSalida += Restaurante.pedidos.get(idPedidoAConsultar).generarTextoFactura();
 		System.out.println(mensajeSalida);
 	}
 	
